@@ -3,26 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Christmas Kindness Express Ticket</title>
+<title>Christmas Kindness Express</title>
 
 <style>
     body {
+        background: #f0ece2;
         font-family: 'Georgia', serif;
-        background: #f4efe2;
         text-align: center;
         padding: 20px;
     }
 
     h2 {
-        font-size: 24px;
-        margin-bottom: 12px;
+        font-size: 26px;
+        margin-bottom: 15px;
+        color: #3a2e0a;
+        font-weight: bold;
     }
 
     input {
         padding: 12px;
         width: 280px;
         border-radius: 8px;
-        border: 1px solid #aaa;
+        border: 1px solid #bbb;
         margin: 8px;
         font-size: 16px;
     }
@@ -33,46 +35,102 @@
         font-size: 18px;
         border: none;
         border-radius: 8px;
-        background: #c49102;
+        background: #b8860b;
         color: white;
         cursor: pointer;
+        transition: 0.2s;
+    }
+    button:hover {
+        background: #d4a017;
     }
 
+    /* ★★★ REAL TICKET DESIGN ★★★ */
     .ticket {
         width: 90%;
-        max-width: 600px;
+        max-width: 650px;
+        padding: 35px 25px;
         margin: 25px auto;
-        padding: 25px;
-        border-radius: 14px;
-        background: linear-gradient(135deg, #d4af37, #b8860b);
-        box-shadow: 0 0 25px rgba(0,0,0,0.2);
-        border: 5px double #fff9d4;
-        color: #fffbe9;
+        border-radius: 18px;
+
+        /* GOLD FOIL GRADIENT */
+        background: linear-gradient(135deg, #d4af37 0%, #b88700 40%, #f1d27a 70%, #c99900 100%);
+
+        /* EMBOSS + DEPTH */
+        box-shadow: 0 0 25px rgba(0,0,0,0.25), inset 0 0 12px rgba(255,255,255,0.4);
+
+        color: white;
+        text-shadow: 1px 1px 2px #7a5c00;
+        border: 6px solid rgba(255,255,255,0.7);
         display: none;
+        position: relative;
     }
 
-    .label {
-        font-size: 18px;
+    /* SPARKLE OVERLAY */
+    .ticket::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background-image: url("https://i.imgur.com/5N6fE4X.png");
+        background-size: cover;
+        opacity: 0.25;
+        pointer-events: none;
+        border-radius: 18px;
+    }
+
+    /* TRAIN WATERMARK */
+    .ticket::after {
+        content: "🚂";
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        font-size: 40px;
+        opacity: 0.45;
+    }
+
+    .title {
+        font-size: 34px;
         font-weight: bold;
-        margin-top: 10px;
+        margin-bottom: 15px;
+        color: #fffdf5;
+        text-shadow: 2px 2px 5px #6b4f00;
+        letter-spacing: 1px;
     }
 
-    .value {
+    .section-label {
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 15px;
+        color: #fffcec;
+    }
+
+    .section-value {
         font-size: 22px;
         margin-bottom: 10px;
+        color: #fffef6;
+    }
+
+    .mission-box {
+        margin-top: 15px;
+        padding: 12px;
+        border-radius: 8px;
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(2px);
+        font-size: 20px;
+        font-weight: bold;
+        border: 1px solid rgba(255,255,255,0.4);
     }
 
     footer {
         margin-top: 30px;
         font-size: 14px;
-        color: #444;
+        color: #555;
     }
 </style>
-
 </head>
 <body>
 
-<h2>🎄 Christmas Kindness Express — Golden Ticket Generator</h2>
+<h2>🎄 Christmas Kindness Express — Golden Ticket Generator 🎄</h2>
 
 <input id="childName" placeholder="Enter Name (e.g., Mia)">
 <br>
@@ -80,31 +138,30 @@
 <br>
 <button onclick="generateTicket()">Generate Ticket</button>
 
+<!-- ★★★ TICKET ★★★ -->
 <div id="ticket" class="ticket">
-    <h1 style="text-shadow: 1px 1px 3px #7a5c00;">CHRISTMAS KINDNESS EXPRESS</h1>
+    <div class="title">CHRISTMAS KINDNESS EXPRESS</div>
 
-    <div class="label">Official Golden Ticket for:</div>
-    <div id="nameField" class="value"></div>
+    <div class="section-label">Official Golden Ticket For:</div>
+    <div id="nameField" class="section-value"></div>
 
-    <div class="label">Route:</div>
-    <div id="routeField" class="value"></div>
+    <div class="section-label">Route:</div>
+    <div id="routeField" class="section-value"></div>
 
-    <div class="label">Mission:</div>
-    <div class="value">You have been chosen to spread kindness today.</div>
+    <div class="mission-box">
+        You have been chosen to spread kindness today.
+    </div>
 
     <div style="margin-top: 15px; font-size: 18px;">
-        🎅 This ticket activates when a kind act is performed.
+        🎅 This ticket activates only when a kind act is performed.
     </div>
 </div>
 
 <button id="downloadBtn" style="display:none;" onclick="downloadTicket()">Download Ticket</button>
 
-<footer>
-Made with kindness in Downtown Cleveland — Nihit Navroz Mehta
-</footer>
+<footer>Made with kindness in Downtown Cleveland — Nihit Navroz Mehta</footer>
 
-
-<!-- SCRIPT SECTION -->
+<!-- Screenshot to PNG library -->
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <script>
@@ -125,7 +182,7 @@ function generateTicket() {
 }
 
 function downloadTicket() {
-    html2canvas(document.querySelector("#ticket"), {scale: 3}).then(canvas => {
+    html2canvas(document.querySelector("#ticket"), {scale: 4}).then(canvas => {
         const link = document.createElement("a");
         link.download = "Golden_Ticket.png";
         link.href = canvas.toDataURL("image/png");
